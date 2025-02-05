@@ -1,0 +1,3 @@
+index,img,type,query,answer,label,correct
+0,166.png,h_bar,What percent who think of President Donald Trump as Dangerous?,62%,62,False
+1,166.png,h_bar,Is the sum of the percents of Charismatic and Well-qualified to be president more than A strong leader ?,"Yes. Charismatic (39.0) + Well-qualified to be president (75.0) = 114.0, which is greater than A strong leader (39.0).",Yes,False

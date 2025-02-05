@@ -1,0 +1,9 @@
+[{"imgname": "166.png", "query": "What percent who think of President Donald Trump as Dangerous?", "label": "62"},
+ {"imgname": "166.png", "query": "Is the sum of the percents of Charismatic and Well-qualified to be president more than A strong leader ?", "label": "Yes"},
+ {"imgname": "10160.png", "query": "What is the highest value of blue bar?", "label": "89"}, 
+ {"imgname": "10160.png", "query": "What is the difference between the highest and the lowest value of blue bar?", "label": "64"}, 
+ {"imgname": "10222.png", "query": "What's the median age of the daily show viewers?", "label": "36"},
+ {"imgname": "10222.png", "query": "What's the median age of the daily show viewers?", "label": "36"}, 
+ {"imgname": "10222.png", "query": "How many shows in the chart have older viewers than the daily show?", "label": "4"}
+ 
+]

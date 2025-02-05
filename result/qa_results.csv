@@ -1,0 +1,16 @@
+index,img,type,query,answer,label,correct
+0,166.png,h_bar,What percent who think of President Donald Trump as Dangerous?,62%,62,False
+1,166.png,h_bar,Is the sum of the percents of Charismatic and Well-qualified to be president more than A strong leader ?,"Here's how to figure this out:
+
+* **Charismatic:** 39.0%
+* **Well-qualified to be president:** 75.0%
+* **Their sum:** 39.0% + 75.0% = 114.0%
+
+* **A strong leader:** 39.0% (We use the value from Row 6 since it's the clearest label)
+
+* **Comparison:** 114.0% > 39.0%
+
+So, yes, the sum of the percentages for ""Charismatic"" and ""Well-qualified to be president"" is greater than the percentage for ""A strong leader"".",Yes,False
+2,10160.png,h_bar,What is the highest value of blue bar?,52%,89,False
+3,10160.png,h_bar,What is the difference between the highest and the lowest value of blue bar?,"The highest value of the blue bar is 52% (Used in a gym) and the unspecified lowest value is 0% (from the header).  Therefore, the difference is 52% - 0% = 52%.",64,False
+4,10222.png,h_bar,What's the median age of the daily show viewers?,"This table doesn't include information about ""The Daily Show.""  Therefore, I cannot answer your question.",36,False
