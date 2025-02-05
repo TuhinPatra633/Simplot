@@ -1,6 +1,6 @@
 # 🚀 Simplot
 
-![📊 Simplot Banner](/banner.png)
+![📊 Simplot Banner](/image.png)
 
 **Simplot** is a chart-based question-answering system leveraging pre-trained models for extracting tables from charts and answering questions. The project is divided into multiple phases, including data preparation, model training, and inference.
 
