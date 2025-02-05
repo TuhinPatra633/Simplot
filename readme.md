@@ -1,160 +1,108 @@
-![SIMPLOT Banner](assets/banner.png)
+# 🚀 Simplot
 
-# SIMPLOT: Enhancing Chart Question Answering by Distilling Essentials
+![📊 Simplot Banner](/banner.png)
 
-Official implementation of [**SIMPLOT: Enhancing Chart Question Answering by Distilling Essentials**](https://arxiv.org/abs/2405.00021), accepted at **NAACL 2025 (Findings)**.
-
----
-
-## 🚀 Overview
-
-Chart interpretation with logical reasoning is a growing challenge in vision-language models. **SIMPLOT** improves chart-to-table extraction by filtering essential elements, enhancing reasoning without additional datasets or annotations.
-
-### 🔹 Key Contributions:
-- Mimics a simplified plot retaining only essential information for reasoning.
-- Overcomes limitations of previous SOTA methods like DePlot.
-- Introduces a novel prompt addressing ignored visual attributes (e.g., color).
-
-<p align="center">
-  <img src="assets/architecture.png" width="85%">
-</p>
+**Simplot** is a chart-based question-answering system leveraging pre-trained models for extracting tables from charts and answering questions. The project is divided into multiple phases, including data preparation, model training, and inference.
 
 ---
 
-## ⚙️ Environment Setup
-
-```bash
-conda create -n Simplot python=3.8 
-conda activate Simplot 
-pip install -r requirements.txt
-```
+## 📥 Dataset
+📌 Download the dataset from the following link:  
+[📂 ChartQA Dataset - HuggingFace Repository](https://huggingface.co/datasets/ahmed-masry/ChartQA/tree/main)
 
 ---
 
-## 📂 Dataset Preparation
+## 📂 File Descriptions
 
-Download the **ChartQA** dataset from: [Hugging Face](https://huggingface.co/datasets/ahmed-masry/ChartQA)
+- 📜 `dataset.py` → Prepares the dataset and generates positive and negative PNG samples.  
+- 🛠️ `preprocess.py` → Processes the dataset to create inputs for model training.  
+- 🎯 `main.py` → Handles training of **Phase 1 (Teacher Model)** and **Phase 2 (Student Model)**.  
+- 📊 `inference.py` → Extracts tables from charts and generates predictions (saved as `prediction.csv`).  
+- ❓ `QA.py` → Performs question answering using the Gemini model (results saved in `qa_results.csv`).  
 
-```bash
-cd data/
-unzip test.zip
-cd ..
-python preprocess.py
+---
+
+## 🏋️ Model Training
+
+Follow these steps to train the models:
+
+1️⃣ **Download the Dataset**  
+   📌 Download the full dataset from the [ChartQA repository](https://huggingface.co/datasets/ahmed-masry/ChartQA/tree/main).  
+
+2️⃣ **Set Up the Environment**  
+   🛠️ Create a Python environment using the dependencies listed in `requirements.txt`:
+   ```bash
+   conda create -n simplot python=3.8 
+   conda activate simplot 
+   pip install -r requirements.txt
+   ```
+
+3️⃣ **Run Preprocessing**  
+   🏗️ Execute the preprocessing script:  
+   ```bash
+   python preprocess.py
+   ```
+
+4️⃣ **Phase 1: Teacher Model Training**  
+   🎯 Train the teacher model using the following command:  
+   ```bash
+   python main.py --phase 1
+   ```
+
+5️⃣ **Phase 2: Student Model Training**  
+   🏆 Train the student model by loading the best Phase 1 model state:  
+   ```bash
+   python main.py --phase 2 --state_path './state/phase_1_best_model.pth' --lr 1e-5
+   ```
+
+---
+
+## 🔎 Inference
+
+The pre-trained models are available in the `state/` folder. To perform inference:
+
+1️⃣ **Set Up the Environment**  
+   ⚙️ Create the environment using `requirements.txt`.
+
+2️⃣ **Extract Tables from Charts**  
+   📊 Run the following command to generate predictions:  
+   ```bash
+   python inference.py
+   ```
+   ✅ Sample output can be found in `result/prediction.csv`.
+
+3️⃣ **Question Answering**  
+   🤖 Use the Gemini model for question answering:  
+   ```bash
+   python QA.py --api_key 'your_api_key' --qa_type 'human'
+   ```
+   📄 Results will be saved in `result/qa_results.csv`. A sample is already provided in the `result/` folder.
+
+---
+
+## 📂 Folder Structure
+
 ```
-
-Ensure the directory structure is:
-
-```
-data/
-├── train  
-│   ├── train_augmented.json 
-│   ├── train_human.json   
-│   ├── annotations       
-│   ├── png               
-│   ├── tables            
-│   ├── positive_png      
-│   ├── negative_png      
-│   ├── columns           
-│   ├── indexes           
+Simplot/
 │
-├── val  
-│
-└── test  
-    ├── gpt_columns       
-    ├── gpt_indexes       
+├── dataset.py
+├── preprocess.py
+├── main.py
+├── inference.py
+├── QA.py
+├── requirements.txt
+├── state/                     # 🏆 Pre-trained model files
+│   ├── phase_2_best_model.pth
+│   ├── ...
+├── result/                    # 📄 Output files
+│   ├── prediction.csv         # 📊 Sample table extraction results
+│   ├── qa_results.csv         # ❓ Sample QA results
+└── data/                      # 📂 Dataset folder
 ```
 
 ---
 
-## 🏋️ Training
+## 📝 Notes
 
-### 🔹 Phase 1 (Chart Simplification Training)
-```bash
-python main.py --phase 1
-```
-
-### 🔹 Phase 2 (Chart-to-Table Extraction & Reasoning)
-```bash
-python main.py --phase 2 --state_path './state/phase_1_best_model.pth' --lr 1e-5 
-```
-
----
-
-## 🔍 Inference
-
-### 📊 Evaluate RD
-```bash
-python inference.py
-```
-
-### 📝 ChartQA Question Answering
-```bash
-python QA.py --api_key 'your_api_key' --qa_type 'human or augmented'
-```
-
----
-
-## 📈 OpenCQA Evaluation
-
-### 🔹 Dataset Setup
-Download **OpenCQA** from: [GitHub](https://github.com/vis-nlp/OpenCQA)
-
-```bash
-cd data/opencqa/test/
-unzip test.zip
-cd ../../../
-python preprocess_opencqa.py
-```
-
-### 🔹 Inference
-```bash
-python inference.py --img_path './data/opencqa/test/img/' --row_path './data/opencqa/test/gpt_indexes/' --col_path './data/opencqa/test/gpt_columns/' --inference_type 'opencqa/'
-```
-
-### 🔹 Open-ended Question Answering
-```bash
-python opencqa.py --api_key 'your_api_key'
-```
-
----
-
-## 🏆 Unichart Integration
-
-### 🔹 Phase 1
-```bash
-python unichart/unichart_phase1.py
-```
-
-### 🔹 Phase 2
-```bash
-python unichart/unichart_phase2.py
-```
-
-### 🔹 Inference
-```bash
-python unichart/unichart_inference.py
-```
-
-Obtain `predicted.csv` and use it in the QA process.
-
----
-
-## 🛠️ Citation
-If you find this work useful, please cite:
-```bibtex
-@article{simplot2025,
-  author    = {Your Name},
-  title     = {SIMPLOT: Enhancing Chart Question Answering by Distilling Essentials},
-  journal   = {NAACL 2025 Findings},
-  year      = {2025},
-  archivePrefix = {arXiv},
-  eprint    = {2405.00021},
-}
-```
-
----
-
-## 📬 Contact
-For issues, feel free to open an [issue](https://github.com/your_repo/issues) or reach out!
-
----
+- 🔑 Ensure you have a valid API key for Gemini when running the QA phase.  
+- 🛠️ Modify paths in the commands if your directory structure differs.
